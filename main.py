@@ -8,6 +8,7 @@ from menu import (
 )
 
 from modules.student import Student
+from modules.courses import Course
 
 while True:
     print(main_menu())
@@ -49,11 +50,18 @@ while True:
             cr_choice = int(input("Enter 1-4:"))
 
             if cr_choice == 1:
-                pass
+                course_name = input("Enter course name:")
+                course_id = int(input("Enter course ID:"))
+                cr_hrs = int(input("Enter credit hrs:"))
+
+                print(Course.add_course(course_name, course_id, cr_hrs))
+
             elif cr_choice == 2:
-                pass
+                print(Course.view_all_courses())
+
             elif cr_choice == 3:
-                pass
+                course_id = int(input("Enter course ID to delete:"))
+                print(Course.delete_course(id))
             else:
                 break
 
