@@ -9,6 +9,11 @@ from menu import (
 
 from modules.student import Student
 from modules.courses import Course
+import modules.enrollment as Enrollment
+import modules.grades as Grades
+import modules.reports.course_reports as CourseReports
+import modules.reports.dept_reports as DeptReports
+import modules.reports.student_reports as StudentReports
 
 while True:
     print(main_menu())
@@ -68,28 +73,50 @@ while True:
     elif choice == 3:
         while True:
             enrollment_menu()
-            gr_choice = int(input("Enter 1-4:"))
+            en_choice = int(input("Enter 1-4:"))
 
-            if gr_choice == 1:
-                pass
-            elif gr_choice == 2:
-                pass
-            elif gr_choice == 3:
-                pass
+            if en_choice == 1:
+                student_id = int(input("Enter student ID:"))
+                course_id = int(input("Enter course ID:"))
+
+                print(Enrollment.enroll_student_in_course(student_id, course_id))
+
+            elif en_choice == 2:
+                student_id = int(input("Enter student ID:"))
+                course_id = int(input("Enter course ID:"))
+
+                print(Enrollment.remove_enrollment_from_course(student_id, course_id))
+
+            elif en_choice == 3:
+                student_id = int(input("Enter student ID:"))
+
+                print(Enrollment.view_enrolled_courses(student_id))
             else:
                 break
 
     elif choice == 4:
         while True:
             grade_menu()
-            re_choice = int(input("Enter 1-4:"))
+            gr_choice = int(input("Enter 1-4:"))
 
-            if re_choice == 1:
-                pass
-            elif re_choice == 2:
-                pass
-            elif re_choice == 3:
-                pass
+            if gr_choice == 1:
+                student_id = int(input("Enter student ID:"))
+                print(Grades.view_student_grades(student_id))
+                course_name = input("Enter course name to change grade:")
+                grade = input("Enter grade to assign:")
+                print(Grades.assign_grade(student_id, course_name, grade))
+
+            elif gr_choice == 2:
+                student_id = int(input("Enter student ID:"))
+                print(Grades.view_student_grades(student_id))
+                course_name = input("Enter course name to change grade:")
+                grade = input("Enter updated grade:")
+                print(Grades.update_grade(student_id, course_name, grade))
+
+            elif gr_choice == 3:
+                student_id = int(input("Enter student ID:"))
+                print(Grades.view_student_grades(student_id))
+
             else:
                 break
 
@@ -99,11 +126,22 @@ while True:
             re_choice = int(input("Enter 1-4:"))
 
             if re_choice == 1:
-                pass
+                print("---Top Performing Student---")
+                print(StudentReports.top_performing_student())
+
+                print("\n---Avg Student Grade---")
+                print(StudentReports.avg_student_grade())
+
+                print("\n---Pass/Fail Students---")
+                print("abhi ni kia")
+
             elif re_choice == 2:
-                pass
+                print("No. of Students in Each Department:")
+                print(DeptReports.students_in_each_dept())
+
             elif re_choice == 3:
-                pass
+                print("No. of students in Each Enrolled Course:")
+                print(CourseReports.students_in_each_course())
             else:
                 break
     else:

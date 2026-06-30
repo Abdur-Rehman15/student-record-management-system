@@ -1,11 +1,12 @@
 {
-  "grades": [
-    {
-      "student_id": 1,
-      "grades": {
-        "python": "None",
-        "database": "B+"
-      }
-    }
-  ]
+    "grades": [
+        {
+            "student_id": 1,
+            "grades": {
+                "python": "80",
+                "database": "89",
+                "AI": "70"
+            }
+        }
+    ]
 }

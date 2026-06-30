@@ -6,6 +6,13 @@
             "age": 20,
             "email_address": "abc@gmail.com",
             "department": "SE"
+        },
+        {
+            "id": 2,
+            "name": "ali",
+            "age": 20,
+            "email_address": "ali@gmail.com",
+            "department": "Data Science"
         }
     ]
 }

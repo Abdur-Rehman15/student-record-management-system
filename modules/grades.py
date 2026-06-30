@@ -1,6 +1,22 @@
 import json
 
 
+def view_student_grades(student_id):
+    try:
+
+        with open("data/grades.json", "r") as file:
+            data = json.load(file)
+
+    except FileNotFoundError:
+        return "student grades dont exist"
+
+    for grades in data["grades"]:
+        if grades["student_id"] == student_id:
+            return grades
+
+    return "no grades found"
+
+
 def assign_grade(student_id, course_name, grade):
     try:
 
@@ -8,19 +24,24 @@ def assign_grade(student_id, course_name, grade):
             data = json.load(file)
 
     except FileNotFoundError:
-        print("no course exists like that")
+        return "no grades exist for any student"
 
-    for grades in data:
+    print(view_student_grades(student_id))
+
+    for grades in data["grades"]:
         if grades["student_id"] == student_id:
             gr = grades["grades"]
+            if course_name not in gr:
+                return "course doesnt exist"
             if (gr[course_name]) == "None":
                 gr[course_name] = grade
-                print("grade assigned")
+                with open("data/grades.json", "w") as file:
+                    json.dump(data, file, indent=4)
+                return "grade assigned"
             else:
-                print("grade already assigned")
+                return "grade already assigned"
 
-    with open("data/grades.json", "w") as file:
-        json.dump(data, file, indent=4)
+    return "student id doesnt exist"
 
 
 def update_grade(student_id, course_name, grade):
@@ -30,30 +51,21 @@ def update_grade(student_id, course_name, grade):
             data = json.load(file)
 
     except FileNotFoundError:
-        print("no course exists like that")
+        return "no grades exist for any student"
 
-    for grades in data:
+    print(view_student_grades(student_id))
+
+    for grades in data["grades"]:
         if grades["student_id"] == student_id:
             gr = grades["grades"]
+            if course_name not in gr:
+                return "course doesnt exist"
             if (gr[course_name]) != "None":
                 gr[course_name] = grade
-                print("grade updated")
+                with open("data/grades.json", "w") as file:
+                    json.dump(data, file, indent=4)
+                return "grade updated"
             else:
-                print("grade already assigned")
+                return "grade already assigned"
 
-    with open("data/grades.json", "w") as file:
-        json.dump(data, file, indent=4)
-
-
-def view_student_grades(student_id):
-    try:
-
-        with open("data/grades.json", "r") as file:
-            data = json.load(file)
-
-    except FileNotFoundError:
-        print("no course exists like that")
-
-    for grades in data:
-        if grades["student_id"] == student_id:
-            print(grades)
+    return "student ID doesnt exist"

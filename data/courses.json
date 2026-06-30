@@ -1,9 +1,14 @@
 {
-  "courses":[
-    {
-      "name": "Computer Architecture",
-      "id": 1,
-      "credit_hrs": 3
-    }
-  ]
+    "courses": [
+        {
+            "name": "Computer Architecture",
+            "id": 1,
+            "credit_hrs": 3
+        },
+        {
+            "name": "Computer Networks",
+            "id": 2,
+            "credit_hrs": 3
+        }
+    ]
 }
