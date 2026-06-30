@@ -1,0 +1,11 @@
+{
+  "grades": [
+    {
+      "student_id": 1,
+      "grades": {
+        "python": "None",
+        "database": "B+"
+      }
+    }
+  ]
+}
