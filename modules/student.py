@@ -10,7 +10,19 @@ class Student:
     email_address: str
     department: str
 
-    #  abhi yahan pr student details bhi validate krni hain
+    # ---------- Helper Methods ----------
+    @classmethod
+    def _load_data(cls):
+        try:
+            with open("data/students.json", "r") as file:
+                return json.load(file)
+        except FileNotFoundError:
+            return {"students": []}
+
+    @classmethod
+    def _save_data(cls, data):
+        with open("data/students.json", "w") as file:
+            json.dump(data, file, indent=4)
 
     # ----------add student-------------
     @classmethod
@@ -25,18 +37,9 @@ class Student:
             "department": department,
         }
 
-        try:
-
-            with open("data/students.json", "r") as file:
-                data = json.load(file)
-
-        except FileNotFoundError:
-            data = {"students": []}
-
+        data = cls._load_data()
         data["students"].append(new_student)
-
-        with open("data/students.json", "w") as file:
-            json.dump(data, file, indent=4)
+        cls._save_data(data)
 
         print("student added successfully")
 
@@ -45,45 +48,36 @@ class Student:
     def update_student(
         cls, name: str, id: int, email_address: str, age: int, department: str
     ):
-        try:
+        data = cls._load_data()
 
-            with open("data/students.json", "r") as file:
-                data = json.load(file)
+        if not data["students"]:
+            return "no student exists"
 
-        except FileNotFoundError:
-            print("no student exists")
-
-        for student in data:
+        for student in data["students"]:
             if student["id"] == id:
-
-                print("students details updated")
-                with open("data/students.json", "w") as file:
-                    json.dump(data, file, indent=4)
-                pass
+                student["name"] = name
+                student["age"] = age
+                student["email_address"] = email_address
+                student["department"] = department
+                
+                cls._save_data(data)
+                return "students details updated"
+                
+        return "student not found"
 
     @classmethod
     def get_all_students(cls):
-        try:
+        data = cls._load_data()
+        
+        if not data["students"]:
+            return "no student exists"
 
-            with open("data/students.json", "r") as file:
-                data = json.load(file)
-
-            print("---All Students---")
-            print(data)
-
-        except FileNotFoundError:
-            print("no student exists")
+        return data
 
     # ----------search student by ID-------------
     @classmethod
     def search_student_by_ID(cls, id: int):
-        try:
-
-            with open("data/students.json", "r") as file:
-                data = json.load(file)
-
-        except FileNotFoundError:
-            return "no student exists"
+        data = cls._load_data()
 
         for student in data["students"]:
             if student["id"] == id:
@@ -94,20 +88,19 @@ class Student:
     # ----------delete student-------------
     @classmethod
     def delete_student(cls, id: int):
-        try:
-
-            with open("data/students.json", "r") as file:
-                data = json.load(file)
-
-        except FileNotFoundError:
-            return "no student exists"
+        data = cls._load_data()
 
         updated_list = {"students": []}
+        student_found = False
+
         for student in data["students"]:
             if student["id"] != id:
                 updated_list["students"].append(student)
+            else:
+                student_found = True
 
-        with open("data/students.json", "w") as file:
-            json.dump(updated_list, file, indent=4)
+        if not student_found:
+            return "no student exists with this ID"
 
+        cls._save_data(updated_list)
         return "student deleted successfully"

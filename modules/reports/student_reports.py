@@ -34,11 +34,11 @@ def avg_student_grade():
         if scores:
             avg = sum(scores) / len(scores)
             all_averages[f"Student ID {student_id}"] = (
-                f"avg grade of student is {avg:.2f}"
+                f"avg grade of student is {avg}"
             )
 
     return all_averages
 
 
-def pass_fail_students_count(self):
-    pass
+def pass_fail_students_count():
+    return "abhi ni kia ye"

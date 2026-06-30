@@ -16,7 +16,7 @@ import modules.reports.dept_reports as DeptReports
 import modules.reports.student_reports as StudentReports
 
 while True:
-    print(main_menu())
+    main_menu()
     choice = int(input("Enter 1-6:"))
 
     if choice == 1:
@@ -34,7 +34,7 @@ while True:
                 Student.add_student(id, name, age, email_address, department)
 
             elif st_choice == 2:
-                Student.get_all_students()
+                print(Student.get_all_students())
 
             elif st_choice == 3:
                 id = int(input("Enter student ID:"))
@@ -42,6 +42,12 @@ while True:
 
             elif st_choice == 4:
                 id = int(input("Enter student ID:"))
+                name = input("Enter student name:")
+                age = int(input("Enter age:"))
+                email_address = input("Enter email:")
+                department = input("Enter department:")
+
+                print(Student.update_student(name, id, email_address, age, department))
 
             elif st_choice == 5:
                 id = int(input("Enter student ID to delete:"))
@@ -108,10 +114,14 @@ while True:
 
             elif gr_choice == 2:
                 student_id = int(input("Enter student ID:"))
-                print(Grades.view_student_grades(student_id))
-                course_name = input("Enter course name to change grade:")
-                grade = input("Enter updated grade:")
-                print(Grades.update_grade(student_id, course_name, grade))
+                grades = Grades.view_student_grades(student_id)
+                if grades is not None:
+                    print(grades)
+                    course_name = input("Enter course name to change grade:")
+                    grade = input("Enter updated grade:")
+                    print(Grades.update_grade(student_id, course_name, grade))
+                else:
+                    print('no student found for this ID')
 
             elif gr_choice == 3:
                 student_id = int(input("Enter student ID:"))
@@ -133,7 +143,7 @@ while True:
                 print(StudentReports.avg_student_grade())
 
                 print("\n---Pass/Fail Students---")
-                print("abhi ni kia")
+                print(StudentReports.pass_fail_students_count())
 
             elif re_choice == 2:
                 print("No. of Students in Each Department:")

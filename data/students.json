@@ -9,8 +9,8 @@
         },
         {
             "id": 2,
-            "name": "ali",
-            "age": 20,
+            "name": "m.ali",
+            "age": 22,
             "email_address": "ali@gmail.com",
             "department": "Data Science"
         }
