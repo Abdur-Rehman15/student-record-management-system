@@ -1,0 +1,9 @@
+{
+  "courses":[
+    {
+      "name": "Computer Architecture",
+      "id": 1,
+      "credit_hrs": 3
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "Abdur Rehman",
+      "age": 22,
+      "email_address": "abdurrehman@gmail.com",
+      "department": "Software Engineering"
+    }
+  ]
+}
