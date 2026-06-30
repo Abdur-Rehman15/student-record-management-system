@@ -1,5 +1,3 @@
-import numpy as np
-import pandas as pd
 import json
 
 
@@ -12,4 +10,9 @@ def __load_enrollments():
 
 def students_in_each_course():
     data = __load_enrollments()
-    # abhi pta ni kesy hoga ye
+    courses = {}
+    for enrollment in data["enrollments"]:
+        for course_id in enrollment["course_id"]:
+            courses[course_id] = courses.get(course_id, 0) + 1
+
+    return courses
