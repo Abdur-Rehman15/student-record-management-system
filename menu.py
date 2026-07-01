@@ -1,9 +1,6 @@
 def main_menu():
 
   print("""
-==============================
-Student Record Management
-===============================
 1. Student Management
 2. Course Management
 3. Enrollment
@@ -14,9 +11,6 @@ Student Record Management
 def student_menu():
 
   print("""
-==============================
-Student Management
-===============================
 1. Add Student
 2. View All Students
 3. Search Student by ID
@@ -27,9 +21,6 @@ Student Management
 def course_menu():
 
   print("""
-==============================
-Course Management
-===============================
 1. Add Course
 2. View All Courses
 3. Delete Course
@@ -38,9 +29,6 @@ Course Management
 def enrollment_menu():
 
   print("""
-==============================
-Enrollment
-===============================
 1. Enroll Student in a Course
 2. Remove Enrollment
 3. View Courses Enrolled by a Student
@@ -49,9 +37,6 @@ Enrollment
 def grade_menu():
 
   print("""
-==============================
-Grade Management
-===============================
 1. Assign Grade
 2. Update Grade
 3. View Student Grades
@@ -60,10 +45,7 @@ Grade Management
 def reports_menu():
 
   print("""
-==============================
-Reports
-===============================
-1. Student Reports
+. Student Reports
 2. Department Reports
 3. Course Reports
 4. Go Back""")
