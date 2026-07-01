@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from functools import wraps
 from datetime import datetime
+from utils import _is_valid_studentID, _is_existing_student
 import json
+
 
 def my_logger(orig_func):
     import logging
@@ -12,10 +14,13 @@ def my_logger(orig_func):
             filename=f"{orig_func.__name__}.log", level=logging.INFO, force=True
         )
 
-        logging.info(f"new student added with args: {args} and kwargs: {kwargs} at this time: {datetime.now()}")
+        logging.info(
+            f"new student added with args: {args} and kwargs: {kwargs} at this time: {datetime.now()}"
+        )
         return orig_func(*args, **kwargs)
 
     return wrapper
+
 
 @dataclass
 class Student:
@@ -38,95 +43,123 @@ class Student:
         with open("data/students.json", "w") as file:
             json.dump(data, file, indent=4)
 
-
     # ----------add student-------------
     @classmethod
     @my_logger
     def add_student(
         cls, id: int, name: str, age: int, email_address: str, department: str
     ):
-        new_student = {
-            "id": id,
-            "name": name,
-            "age": age,
-            "email_address": email_address,
-            "department": department,
-        }
+        if not _is_valid_studentID(id):
+
+            print("student id is not valid")
+            return
 
         data = cls._load_data()
-        data["students"].append(new_student)
-        cls._save_data(data)
+        if not _is_existing_student(data, id):
 
-        print("student added successfully")
-        return
+            new_student = {
+                "id": id,
+                "name": name,
+                "age": age,
+                "email_address": email_address,
+                "department": department,
+            }
+
+
+            data["students"].append(new_student)
+            cls._save_data(data)
+
+            print("student added successfully")
+            return
+        else:
+            print("student already exists")
 
     # ----------update student-------------
     @classmethod
     def update_student(
         cls, name: str, id: int, email_address: str, age: int, department: str
     ):
-        data = cls._load_data()
+        if not _is_valid_studentID(id):
 
-        if not data["students"]:
-            print("no student exists")
+            print("student id is not valid")
             return
 
-        for student in data["students"]:
-            if student["id"] == id:
-                student["name"] = name
-                student["age"] = age
-                student["email_address"] = email_address
-                student["department"] = department
-                
-                cls._save_data(data)
-                print("students details updated")
-                return
-                
-        print("student not found")
-        return
+        data = cls._load_data()
+        if _is_existing_student(data, id):
 
+
+            if not data["students"]:
+                print("no student exists")
+                return
+
+            for student in data["students"]:
+                if student["id"] == id:
+                    student["name"] = name
+                    student["age"] = age
+                    student["email_address"] = email_address
+                    student["department"] = department
+
+                    cls._save_data(data)
+                    print("students details updated")
+                    return
+        
+        else:
+            print("student not found")
+            return
+
+    # ----------get all students-------------
     @classmethod
     def get_all_students(cls):
         data = cls._load_data()
-        
+
         if not data["students"]:
             print("no student exists")
             return
 
+        print('\n')
         for student in data["students"]:
             yield student
 
     # ----------search student by ID-------------
     @classmethod
     def search_student_by_ID(cls, id: int):
+        if not _is_valid_studentID(id):
+
+            print("student id is not valid")
+            return
+
         data = cls._load_data()
+        if _is_existing_student(data, id):
 
-        for student in data["students"]:
-            if student["id"] == id:
-                print(student)
-                return
+            for student in data["students"]:
+                if student["id"] == id:
+                    print(student)
+                    return
 
-        print("no student exists with this ID")
-        return
+        else:
+            print("no student exists with this ID")
+            return
 
     # ----------delete student-------------
     @classmethod
     def delete_student(cls, id: int):
-        data = cls._load_data()
+        if not _is_valid_studentID(id):
 
-        updated_list = {"students": []}
-        student_found = False
-
-        for student in data["students"]:
-            if student["id"] != id:
-                updated_list["students"].append(student)
-            else:
-                student_found = True
-
-        if not student_found:
-            print("no student exists with this ID")
+            print("student id is not valid")
             return
 
-        cls._save_data(updated_list)
-        print("student deleted successfully")
-        return
+        data = cls._load_data()
+        if _is_existing_student(data, id):
+
+            updated_list = {"students": []}
+
+            for student in data["students"]:
+                if student["id"] != id:
+                    updated_list["students"].append(student)
+
+            cls._save_data(updated_list)
+            print("student deleted successfully")
+            return
+        else:
+            print("no student exists with this ID")
+            return

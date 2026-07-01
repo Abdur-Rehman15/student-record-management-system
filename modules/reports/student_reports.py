@@ -35,11 +35,10 @@ def avg_student_grade():
 
         if scores:
             avg = sum(scores) / len(scores)
-            all_averages[f"Student ID {student_id}"] = (
-                f"avg grade of student is {avg}"
-            )
+            all_averages[student_id] = avg
 
-    print(all_averages)
+    for student_id, avg in all_averages.items():
+        print(f"Student ID: {student_id} has avg grade: {avg}")
     return
 
 

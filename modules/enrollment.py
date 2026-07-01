@@ -1,4 +1,5 @@
 import json
+from utils import _is_valid_studentID, _is_existing_courseID, _is_valid_courseID
 
 # ===========error handling krni he course ids wgera ki abhi=========
 
@@ -9,6 +10,13 @@ def _load_enrollments():
     except FileNotFoundError:
         return {"enrollments": []}
 
+def _load_courses():
+    try:
+        with open("data/courses.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return False
+
 
 def _save_enrollments(data):
     with open("data/enrollments.json", "w") as file:
@@ -17,35 +25,56 @@ def _save_enrollments(data):
 
 # ----------new enrollment in course------------
 def enroll_student_in_course(student_id, course_id):
-    new_enrollment = {"student_id": student_id, "course_id": course_id}
 
-    data = _load_enrollments()
+    if not _is_valid_studentID(student_id):
+        print("invalid student ID entered")
+        return
+    
+    if not _is_valid_courseID(course_id):
+        print("invalid course id entered")
+        return
 
-    for enrollment in data["enrollments"]:
-        if enrollment["student_id"] == student_id:
-            if course_id in enrollment["course_id"]:
-                print("Student already enrolled in this course")
+    data = _load_courses()
+    if _is_existing_courseID(data, course_id):
+
+        new_enrollment = {"student_id": student_id, "course_id": course_id}
+
+        data = _load_enrollments()
+
+        for enrollment in data["enrollments"]:
+            if enrollment["student_id"] == student_id:
+                if course_id in enrollment["course_id"]:
+                    print("Student already enrolled in this course")
+                    return
+
+                enrollment["course_id"].append(course_id)
+                _save_enrollments(data)
+                print("student enrolled successfully in the course")
                 return
 
-            enrollment["course_id"].append(course_id)
-            _save_enrollments(data)
-            print("student enrolled successfully in the course")
-            return
-
-    data["enrollments"].append(new_enrollment)
-    _save_enrollments(data)
-    print("student enrolled successfully in the course")
-    return
+        data["enrollments"].append(new_enrollment)
+        _save_enrollments(data)
+        print("student enrolled successfully in the course")
+        return
+    else:
+        print('course id doesnt exist yet')
+        return
 
 
 # ----------view enrolled courses------------
 def view_enrolled_courses(student_id):
+
+    if not _is_valid_studentID(student_id):
+        print("invalid student ID entered")
+        return
+    
     data = _load_enrollments()
 
     if "enrollments" not in data or not data["enrollments"]:
         print("no enrollments exist")
         return
 
+    print('\n')
     for enrollment in data["enrollments"]:
         if enrollment["student_id"] == student_id:
             print('Student with ID:', enrollment["student_id"], 'is enrolled in course(s) with ID:', enrollment["course_id"])
@@ -57,24 +86,40 @@ def view_enrolled_courses(student_id):
 
 # --------remove enrollment from course--------------
 def remove_enrollment_from_course(student_id, course_id):
-    data = _load_enrollments()
 
-    if "enrollments" not in data or not data["enrollments"]:
-        print("no enrollments exist")
+    if not _is_valid_studentID(student_id):
+        print("invalid student ID entered")
+        return
+    
+    if not _is_valid_courseID(course_id):
+        print("invalid course id entered")
         return
 
-    updated_list = {"enrollments": []}
-    for enrollment in data["enrollments"]:
-        if enrollment["student_id"] == student_id:
-            new_list = []
-            for id in enrollment["course_id"]:
-                if id != course_id:
-                    new_list.append(id)
-            enrollment["course_id"] = new_list
+    data = _load_courses()
+    if _is_existing_courseID(data, course_id):
 
-        updated_list["enrollments"].append(enrollment)
+        data = _load_enrollments()
 
-    _save_enrollments(updated_list)
+        if "enrollments" not in data or not data["enrollments"]:
+            print("no enrollments exist")
+            return
 
-    print("enrollment removed successfully")
-    return
+        updated_list = {"enrollments": []}
+        for enrollment in data["enrollments"]:
+            if enrollment["student_id"] == student_id:
+                new_list = []
+                for id in enrollment["course_id"]:
+                    if id != course_id:
+                        new_list.append(id)
+                enrollment["course_id"] = new_list
+
+            updated_list["enrollments"].append(enrollment)
+
+        _save_enrollments(updated_list)
+
+        print("enrollment removed successfully")
+        return
+    
+    else:
+        print('this course id doesnt exist')
+        return

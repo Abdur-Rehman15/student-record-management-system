@@ -13,7 +13,8 @@
         {
             "student_id": 2,
             "course_id": [
-                3
+                3,
+                7
             ]
         }
     ]

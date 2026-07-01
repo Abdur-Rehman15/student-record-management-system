@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from utils import _is_valid_courseID, _is_existing_courseID
 import json
 
 
@@ -25,42 +26,55 @@ class Course:
     @classmethod
     def add_course(cls, name: str, id: int, credit_hrs: int):
 
-        new_course = {"name": name, "id": id, "credit_hrs": credit_hrs}
+        if not _is_valid_courseID(id):
+            print("invalid course id entered")
+            return
 
         data = cls._load_data()
+        if not _is_existing_courseID(data, id):
 
-        for courses in data["courses"]:
-            if courses["id"] == id:
-                print("course already exists")
-                return
+            new_course = {"name": name, "id": id, "credit_hrs": credit_hrs}
 
-        data["courses"].append(new_course)
 
-        cls._save_data(data)
+            for courses in data["courses"]:
+                if courses["id"] == id:
+                    print("course already exists")
+                    return
 
-        print("new course added successfully")
-        return
+            data["courses"].append(new_course)
+
+            cls._save_data(data)
+
+            print("new course added successfully")
+            return
+        
+        else:
+            print('course id already exists')
+            return
 
     # ------------delete course------------
     @classmethod
     def delete_course(cls, id: int):
+
+        if not _is_valid_courseID(id):
+            print("invalid course id entered")
+            return
+        
         data = cls._load_data()
-        isFound=False
+        if _is_existing_courseID(data, id):
 
-        updated_course_list = {"courses": []}
-        for courses in data["courses"]:
-            if courses["id"] == id:
-                isFound=True
-                continue
-            updated_course_list["courses"].append(courses)
+            updated_course_list = {"courses": []}
+            for courses in data["courses"]:
+                if courses["id"] != id:
+                    updated_course_list["courses"].append(courses)
 
-        cls._save_data(updated_course_list)
-
-        if isFound==True:
+            cls._save_data(updated_course_list)
             print("course deleted successfully")
+
         else:
             print('No course found against this ID')
         return
+            
 
     # ----------view all courses-------------
     @classmethod
