@@ -34,3 +34,11 @@ def _is_existing_courseID(data, id):
             return True
 
     return False
+
+
+def _is_valid_age(age):
+    if isinstance(age, int):
+        if age >= 1 and age <= 100:
+            return True
+
+    return False

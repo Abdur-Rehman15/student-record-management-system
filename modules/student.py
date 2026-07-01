@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from functools import wraps
 from datetime import datetime
-from utils import _is_valid_studentID, _is_existing_student
+from utils import _is_valid_studentID, _is_existing_student, _is_valid_age
 import json
 
 
@@ -54,6 +54,10 @@ class Student:
             print("student id is not valid")
             return
 
+        if not _is_valid_age(age):
+            print("age not valid")
+            return
+
         data = cls._load_data()
         if not _is_existing_student(data, id):
 
@@ -64,7 +68,6 @@ class Student:
                 "email_address": email_address,
                 "department": department,
             }
-
 
             data["students"].append(new_student)
             cls._save_data(data)
@@ -84,9 +87,12 @@ class Student:
             print("student id is not valid")
             return
 
+        if not _is_valid_age(age):
+            print("age not valid")
+            return
+
         data = cls._load_data()
         if _is_existing_student(data, id):
-
 
             if not data["students"]:
                 print("no student exists")
@@ -102,7 +108,7 @@ class Student:
                     cls._save_data(data)
                     print("students details updated")
                     return
-        
+
         else:
             print("student not found")
             return
@@ -116,7 +122,7 @@ class Student:
             print("no student exists")
             return
 
-        print('\n')
+        print("\n")
         for student in data["students"]:
             yield student
 

@@ -8,18 +8,18 @@
             "department": "SE"
         },
         {
-            "id": 2,
-            "name": "m.ali",
-            "age": 22,
-            "email_address": "ali@gmail.com",
-            "department": "Data Science"
-        },
-        {
             "id": 3,
             "name": "Abdullah",
             "age": 20,
             "email_address": "abdullah@gmail.com",
             "department": "SE"
+        },
+        {
+            "id": 2,
+            "name": "Hassan",
+            "age": 20,
+            "email_address": "hassan@gmail.com",
+            "department": "Data Science"
         }
     ]
 }
