@@ -7,6 +7,14 @@
                 "database": "89",
                 "AI": "70"
             }
+        },
+        {
+            "student_id": 2,
+            "grades": {
+                "python": "40",
+                "database": "53",
+                "AI": "32"
+            }
         }
     ]
 }

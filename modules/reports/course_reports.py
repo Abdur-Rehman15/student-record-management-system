@@ -15,4 +15,7 @@ def students_in_each_course():
         for course_id in enrollment["course_id"]:
             courses[course_id] = courses.get(course_id, 0) + 1
 
-    return courses
+    for course_id, count in courses.items():
+        print(f"Course ID: {course_id} with total students: {count}")
+    return
+

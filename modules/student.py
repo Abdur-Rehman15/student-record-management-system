@@ -1,6 +1,21 @@
 from dataclasses import dataclass
+from functools import wraps
+from datetime import datetime
 import json
 
+def my_logger(orig_func):
+    import logging
+
+    @wraps(orig_func)
+    def wrapper(*args, **kwargs):
+        logging.basicConfig(
+            filename=f"{orig_func.__name__}.log", level=logging.INFO, force=True
+        )
+
+        logging.info(f"new student added with args: {args} and kwargs: {kwargs} at this time: {datetime.now()}")
+        return orig_func(*args, **kwargs)
+
+    return wrapper
 
 @dataclass
 class Student:
@@ -10,7 +25,6 @@ class Student:
     email_address: str
     department: str
 
-    # ---------- Helper Methods ----------
     @classmethod
     def _load_data(cls):
         try:
@@ -24,8 +38,10 @@ class Student:
         with open("data/students.json", "w") as file:
             json.dump(data, file, indent=4)
 
+
     # ----------add student-------------
     @classmethod
+    @my_logger
     def add_student(
         cls, id: int, name: str, age: int, email_address: str, department: str
     ):
@@ -42,6 +58,7 @@ class Student:
         cls._save_data(data)
 
         print("student added successfully")
+        return
 
     # ----------update student-------------
     @classmethod
@@ -51,7 +68,8 @@ class Student:
         data = cls._load_data()
 
         if not data["students"]:
-            return "no student exists"
+            print("no student exists")
+            return
 
         for student in data["students"]:
             if student["id"] == id:
@@ -61,18 +79,22 @@ class Student:
                 student["department"] = department
                 
                 cls._save_data(data)
-                return "students details updated"
+                print("students details updated")
+                return
                 
-        return "student not found"
+        print("student not found")
+        return
 
     @classmethod
     def get_all_students(cls):
         data = cls._load_data()
         
         if not data["students"]:
-            return "no student exists"
+            print("no student exists")
+            return
 
-        return data
+        for student in data["students"]:
+            yield student
 
     # ----------search student by ID-------------
     @classmethod
@@ -81,9 +103,11 @@ class Student:
 
         for student in data["students"]:
             if student["id"] == id:
-                return student
+                print(student)
+                return
 
-        return "no student exists with this ID"
+        print("no student exists with this ID")
+        return
 
     # ----------delete student-------------
     @classmethod
@@ -100,7 +124,9 @@ class Student:
                 student_found = True
 
         if not student_found:
-            return "no student exists with this ID"
+            print("no student exists with this ID")
+            return
 
         cls._save_data(updated_list)
-        return "student deleted successfully"
+        print("student deleted successfully")
+        return

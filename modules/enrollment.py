@@ -24,13 +24,18 @@ def enroll_student_in_course(student_id, course_id):
     for enrollment in data["enrollments"]:
         if enrollment["student_id"] == student_id:
             if course_id in enrollment["course_id"]:
-                return "Student already enrolled in this course"
+                print("Student already enrolled in this course")
+                return
 
             enrollment["course_id"].append(course_id)
             _save_enrollments(data)
-            return "student enrolled successfully in the course"
+            print("student enrolled successfully in the course")
+            return
 
-    return "student doesnt exist"
+    data["enrollments"].append(new_enrollment)
+    _save_enrollments(data)
+    print("student enrolled successfully in the course")
+    return
 
 
 # ----------view enrolled courses------------
@@ -38,13 +43,16 @@ def view_enrolled_courses(student_id):
     data = _load_enrollments()
 
     if "enrollments" not in data or not data["enrollments"]:
-        return "no enrollments exist"
+        print("no enrollments exist")
+        return
 
     for enrollment in data["enrollments"]:
         if enrollment["student_id"] == student_id:
-            return enrollment
+            print('Student with ID:', enrollment["student_id"], 'is enrolled in course(s) with ID:', enrollment["course_id"])
+            return
 
-    return "no enrollments found for this student"
+    print("no enrollments found for this student")
+    return
 
 
 # --------remove enrollment from course--------------
@@ -52,7 +60,8 @@ def remove_enrollment_from_course(student_id, course_id):
     data = _load_enrollments()
 
     if "enrollments" not in data or not data["enrollments"]:
-        return "no enrollments exist"
+        print("no enrollments exist")
+        return
 
     updated_list = {"enrollments": []}
     for enrollment in data["enrollments"]:
@@ -67,5 +76,5 @@ def remove_enrollment_from_course(student_id, course_id):
 
     _save_enrollments(updated_list)
 
-    return "enrollment removed successfully"
-
+    print("enrollment removed successfully")
+    return

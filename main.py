@@ -34,11 +34,13 @@ while True:
                 Student.add_student(id, name, age, email_address, department)
 
             elif st_choice == 2:
-                print(Student.get_all_students())
+                for student in Student.get_all_students():
+                    print(f"ID: {student['id']} with Name: {student['name']}")
+
 
             elif st_choice == 3:
                 id = int(input("Enter student ID:"))
-                print(Student.search_student_by_ID(id))
+                Student.search_student_by_ID(id)
 
             elif st_choice == 4:
                 id = int(input("Enter student ID:"))
@@ -47,7 +49,7 @@ while True:
                 email_address = input("Enter email:")
                 department = input("Enter department:")
 
-                print(Student.update_student(name, id, email_address, age, department))
+                Student.update_student(name, id, email_address, age, department)
 
             elif st_choice == 5:
                 id = int(input("Enter student ID to delete:"))
@@ -65,14 +67,15 @@ while True:
                 course_id = int(input("Enter course ID:"))
                 cr_hrs = int(input("Enter credit hrs:"))
 
-                print(Course.add_course(course_name, course_id, cr_hrs))
+                Course.add_course(course_name, course_id, cr_hrs)
 
             elif cr_choice == 2:
-                print(Course.view_all_courses())
+                for course in Course.view_all_courses():
+                    print('Name:', course["name"], 'ID:', course["id"], 'Credit hrs:', course["credit_hrs"])
 
             elif cr_choice == 3:
                 course_id = int(input("Enter course ID to delete:"))
-                print(Course.delete_course(id))
+                Course.delete_course(id)
             else:
                 break
 
@@ -85,18 +88,18 @@ while True:
                 student_id = int(input("Enter student ID:"))
                 course_id = int(input("Enter course ID:"))
 
-                print(Enrollment.enroll_student_in_course(student_id, course_id))
+                Enrollment.enroll_student_in_course(student_id, course_id)
 
             elif en_choice == 2:
                 student_id = int(input("Enter student ID:"))
                 course_id = int(input("Enter course ID:"))
 
-                print(Enrollment.remove_enrollment_from_course(student_id, course_id))
+                Enrollment.remove_enrollment_from_course(student_id, course_id)
 
             elif en_choice == 3:
                 student_id = int(input("Enter student ID:"))
 
-                print(Enrollment.view_enrolled_courses(student_id))
+                Enrollment.view_enrolled_courses(student_id)
             else:
                 break
 
@@ -107,25 +110,20 @@ while True:
 
             if gr_choice == 1:
                 student_id = int(input("Enter student ID:"))
-                print(Grades.view_student_grades(student_id))
+                Grades.view_student_grades(student_id)
                 course_name = input("Enter course name to change grade:")
                 grade = input("Enter grade to assign:")
-                print(Grades.assign_grade(student_id, course_name, grade))
+                Grades.assign_grade(student_id, course_name, grade)
 
             elif gr_choice == 2:
                 student_id = int(input("Enter student ID:"))
-                grades = Grades.view_student_grades(student_id)
-                if grades is not None:
-                    print(grades)
-                    course_name = input("Enter course name to change grade:")
-                    grade = input("Enter updated grade:")
-                    print(Grades.update_grade(student_id, course_name, grade))
-                else:
-                    print('no student found for this ID')
+                course_name = input("Enter course name to change grade:")
+                grade = input("Enter updated grade:")
+                Grades.update_grade(student_id, course_name, grade)
 
             elif gr_choice == 3:
                 student_id = int(input("Enter student ID:"))
-                print(Grades.view_student_grades(student_id))
+                Grades.view_student_grades(student_id)
 
             else:
                 break
@@ -137,21 +135,21 @@ while True:
 
             if re_choice == 1:
                 print("---Top Performing Student---")
-                print(StudentReports.top_performing_student())
+                StudentReports.top_performing_student()
 
                 print("\n---Avg Student Grade---")
-                print(StudentReports.avg_student_grade())
+                StudentReports.avg_student_grade()
 
                 print("\n---Pass/Fail Students---")
-                print(StudentReports.pass_fail_students_count())
+                StudentReports.pass_fail_students_count()
 
             elif re_choice == 2:
                 print("No. of Students in Each Department:")
-                print(DeptReports.students_in_each_dept())
+                DeptReports.students_in_each_dept()
 
             elif re_choice == 3:
                 print("No. of students in Each Enrolled Course:")
-                print(CourseReports.students_in_each_course())
+                CourseReports.students_in_each_course()
             else:
                 break
     else:

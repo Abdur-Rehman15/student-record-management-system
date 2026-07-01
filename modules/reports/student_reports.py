@@ -19,8 +19,10 @@ def top_performing_student():
         avg = sum(scores) / len(scores)
         if avg > highest:
             topper = grades["student_id"]
+            highest = avg
 
-    return f"Topper student has ID: {topper}"
+    print(f"Topper student has ID: {topper}")
+    return
 
 
 def avg_student_grade():
@@ -37,8 +39,24 @@ def avg_student_grade():
                 f"avg grade of student is {avg}"
             )
 
-    return all_averages
+    print(all_averages)
+    return
 
 
 def pass_fail_students_count():
-    return "abhi ni kia ye"
+    data = __load_grades()
+    pass_count = 0
+    fail_count = 0
+
+    for entry in data["grades"]:
+        scores = [int(v) for v in entry["grades"].values()]
+        
+        if scores:
+            avg = sum(scores) / len(scores)
+            if avg < 50:
+                fail_count += 1
+            else:
+                pass_count += 1
+
+    print("Passed:", pass_count, "Failed:", fail_count)
+    return

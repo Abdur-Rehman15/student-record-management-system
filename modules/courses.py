@@ -31,27 +31,36 @@ class Course:
 
         for courses in data["courses"]:
             if courses["id"] == id:
-                return "course already exists"
+                print("course already exists")
+                return
 
         data["courses"].append(new_course)
 
         cls._save_data(data)
 
-        return "new course added successfully"
+        print("new course added successfully")
+        return
 
     # ------------delete course------------
     @classmethod
     def delete_course(cls, id: int):
         data = cls._load_data()
+        isFound=False
 
         updated_course_list = {"courses": []}
         for courses in data["courses"]:
-            if courses["id"] != id:
-                updated_course_list["courses"].append(courses)
+            if courses["id"] == id:
+                isFound=True
+                continue
+            updated_course_list["courses"].append(courses)
 
         cls._save_data(updated_course_list)
 
-        return "course deleted successfully"
+        if isFound==True:
+            print("course deleted successfully")
+        else:
+            print('No course found against this ID')
+        return
 
     # ----------view all courses-------------
     @classmethod
@@ -59,6 +68,9 @@ class Course:
         data = cls._load_data()
 
         if data is None:
-            return "no course added"
+            print("no course added")
+            return
 
-        return data
+        for course in data["courses"]:
+            yield course
+        return

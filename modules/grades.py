@@ -18,12 +18,15 @@ def view_student_grades(student_id):
     data = _load_grades()
 
     if not data["grades"]:
-        return "student grades dont exist"
+        print("student grades dont exist")
+        return
 
     for grades in data["grades"]:
         if grades["student_id"] == student_id:
-            return grades
+            print(grades)
+            return
 
+    print('no student found')
     return None
 
 
@@ -31,43 +34,57 @@ def assign_grade(student_id, course_name, grade):
     data = _load_grades()
 
     if not data["grades"]:
-        return "no grades exist for any student"
+        print("no grades exist for any student")
+        return
 
     for grades in data["grades"]:
         if grades["student_id"] == student_id:
             gr = grades["grades"]
             
             if course_name not in gr:
-                return "course doesnt exist"
+                print("course doesnt exist")
+                return
                 
             if gr[course_name] == "None":
                 gr[course_name] = grade
                 _save_grades(data)
-                return "grade assigned"
+                print("grade assigned")
+                return
             else:
-                return "grade already assigned"
+                print("grade already assigned")
+                return
 
-    return "student id doesnt exist"
-
+    print("student id doesnt exist")
+    return
 
 def update_grade(student_id, course_name, grade):
     data = _load_grades()
 
     if not data["grades"]:
-        return "no grades exist for any student"
+        print("no grades exist for any student")
+        return
 
-    for grades in data["grades"]:
-        if grades["student_id"] == student_id:
-            gr = grades["grades"]
-            
-            if course_name not in gr:
-                return "course doesnt exist"
+    if view_student_grades(student_id) is not None:
+
+        for grades in data["grades"]:
+            if grades["student_id"] == student_id:
+                gr = grades["grades"]
                 
-            if gr[course_name] != "None":
-                gr[course_name] = grade
-                _save_grades(data)
-                return "grade updated"
-            else:
-                return "cannot update, assign first"
+                if course_name not in gr:
+                    print("course doesnt exist")
+                    return
+                    
+                if gr[course_name] != "None":
+                    gr[course_name] = grade
+                    _save_grades(data)
+                    print("grade updated")
+                    return
+                else:
+                    print("cannot update, assign first")
+                    return
 
-    return "student ID doesnt exist"
+        print("student ID doesnt exist")
+        return
+    else:
+        print("no student found for this ID")
+        return

@@ -9,6 +9,11 @@
             "name": "Computer Networks",
             "id": 2,
             "credit_hrs": 3
+        },
+        {
+            "name": "OOP",
+            "id": 7,
+            "credit_hrs": 3
         }
     ]
 }

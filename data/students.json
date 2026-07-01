@@ -1,7 +1,7 @@
 {
     "students": [
         {
-            "id": 12,
+            "id": 1,
             "name": "abdur",
             "age": 20,
             "email_address": "abc@gmail.com",
@@ -13,6 +13,13 @@
             "age": 22,
             "email_address": "ali@gmail.com",
             "department": "Data Science"
+        },
+        {
+            "id": 3,
+            "name": "Abdullah",
+            "age": 20,
+            "email_address": "abdullah@gmail.com",
+            "department": "SE"
         }
     ]
 }

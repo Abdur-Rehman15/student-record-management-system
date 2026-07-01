@@ -16,4 +16,5 @@ def students_in_each_dept():
     df= pd.DataFrame(data["students"])
     count = df.groupby('department').size()
 
-    return count
+    print(count)
+    return
