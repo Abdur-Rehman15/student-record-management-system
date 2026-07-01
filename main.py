@@ -16,16 +16,81 @@ import modules.reports.dept_reports as DeptReports
 import modules.reports.student_reports as StudentReports
 import os
 
+import sys
+import time
+
+import sys
+import time
+import os
+
+import sys
+import time
+import os
+
+def animated_intro():
+    """Displays a modern cyber-terminal intro sequence with dynamically generated borders."""
+    os.system('clear')
+    print("\n" * 3)
+    
+    # 1. Scanning Effect
+    status_text = " » INITIALIZING SECURE SHELL CONNECTION..."
+    for char in status_text:
+        sys.stdout.write(f"\033[90m{char}\033[0m") 
+        sys.stdout.flush()
+        time.sleep(0.02)
+    time.sleep(0.4)
+    print(" \033[92m[OK]\033[0m")
+    
+    # 2. Setup Dimensions and Dynamic Border
+    title = "STUDENT RECORD MANAGEMENT SYSTEM"
+    padding_each_side = 10
+    inner_width = len(title) + (padding_each_side * 2) # Total interior width of the box
+    
+    # Draw top border automatically to fit the length perfectly
+    print("\n" + " " * 15 + "\033[36m┌" + "─" * inner_width + "┐\033[0m")
+    
+    # Draw side walls and animate text
+    sys.stdout.write(" " * 15 + "\033[36m│\033[0m" + " " * padding_each_side)
+    sys.stdout.flush()
+    
+    for char in title:
+        sys.stdout.write(f"\033[1;33m{char}\033[0m") 
+        sys.stdout.flush()
+        time.sleep(0.05)
+        
+    sys.stdout.write(" " * padding_each_side + "\033[36m│\033[0m\n")
+    
+    # Draw bottom border automatically to match the top exactly
+    print(" " * 15 + "\033[36m└" + "─" * inner_width + "┘\033[0m")
+    time.sleep(0.5)
+    
+    # 3. Spinning Loader
+    print("\n" + " " * 28 + "\033[90mLoading database core...\033[0m")
+    spin_symbols = ['◐', '◓', '◑', '◒']  
+    
+    for i in range(12):
+        sys.stdout.write(f"\r" + " " * 38 + f"\033[35m{spin_symbols[i % 4]}\033[0m")
+        sys.stdout.flush()
+        time.sleep(0.1)
+        
+    # 4. Success Trigger
+    sys.stdout.write(f"\r" + " " * 32 + "\033[1;92mACCESS GRANTED\033[0m\n")
+    time.sleep(1.0)
+
+
+
 while True:
+    animated_intro()
+    input("\n\033[35mPress Enter to continue...\033[0m")
     os.system('clear')
     main_menu()
-    choice = int(input("\033[33mEnter 1-6:\033[0m"))
+    choice = int(input("\n\033[33mEnter 1-6:\033[0m"))
 
     if choice == 1:
         while True:
             os.system('clear')
             student_menu()
-            st_choice = int(input("\033[33mEnter 1-6:\033[0m"))
+            st_choice = int(input("\n\033[33mEnter 1-6:\033[0m"))
 
             if st_choice == 1:
                 try:
@@ -88,7 +153,7 @@ while True:
         while True:
             os.system('clear')
             course_menu()
-            cr_choice = int(input("\033[33mEnter 1-4:\033[0m"))
+            cr_choice = int(input("\n\033[33mEnter 1-4:\033[0m"))
 
             if cr_choice == 1:
                 try:
@@ -134,7 +199,7 @@ while True:
         while True:
             os.system('clear')
             enrollment_menu()
-            en_choice = int(input("\033[33mEnter 1-4:\033[0m"))
+            en_choice = int(input("\n\033[33mEnter 1-4:\033[0m"))
 
             if en_choice == 1:
                 try:
@@ -179,7 +244,7 @@ while True:
         while True:
             os.system('clear')
             grade_menu()
-            gr_choice = int(input("\033[33mEnter 1-4:\033[0m"))
+            gr_choice = int(input("\n\033[33mEnter 1-4:\033[0m"))
 
             if gr_choice == 1:
                 try:
@@ -231,7 +296,7 @@ while True:
         while True:
             os.system('clear')
             reports_menu()
-            re_choice = int(input("\033[33mEnter 1-4:\033[0m"))
+            re_choice = int(input("\n\033[33mEnter 1-4:\033[0m"))
 
             if re_choice == 1:
                 print("\033[34m---Top Performing Student---\033[0m")
