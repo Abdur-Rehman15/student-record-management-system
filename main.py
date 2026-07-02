@@ -92,8 +92,10 @@ while True:
     try:
         while True:
             choice = int(input("\n\033[33mEnter 1-6:\033[0m "))
-            if choice in (1, 6):
+            if 1 <= choice <= 6:  # FIXED: Now catches all numbers between 1 and 6 inclusive
                 break
+            else:
+                print("\033[31mPlease enter a number from 1 to 6.\033[0m")
 
     except ValueError:
         print("invalid choice entered")
@@ -107,8 +109,10 @@ while True:
             try:
                 while True:
                     st_choice = int(input("\n\033[33mEnter 1-6:\033[0m "))
-                    if st_choice in (1, 6):
+                    if 1 <= st_choice <= 6:  # FIXED
                         break
+                    else:
+                        print("\033[31mPlease enter a number from 1 to 6.\033[0m")
 
             except ValueError:
                 print("invalid choice entered")
@@ -189,8 +193,10 @@ while True:
             try:
                 while True:
                     cr_choice = int(input("\n\033[33mEnter 1-4:\033[0m "))
-                    if cr_choice in (1, 4):
+                    if 1 <= cr_choice <= 4:  # FIXED
                         break
+                    else:
+                        print("\033[31mPlease enter a number from 1 to 4.\033[0m")
             except ValueError:
                 print("invalid choice entered")
                 input("\n\033[35mPress Enter to continue...\033[0m")
@@ -237,8 +243,10 @@ while True:
             try:
                 while True:
                     en_choice = int(input("\n\033[33mEnter 1-4:\033[0m "))
-                    if en_choice in (1, 4):
+                    if 1 <= en_choice <= 4:  # FIXED
                         break
+                    else:
+                        print("\033[31mPlease enter a number from 1 to 4.\033[0m")
             except ValueError:
                 print("invalid choice entered")
                 input("\n\033[35mPress Enter to continue...\033[0m")
@@ -286,8 +294,10 @@ while True:
             try:
                 while True:
                     gr_choice = int(input("\n\033[33mEnter 1-4:\033[0m "))
-                    if gr_choice in (1, 4):
+                    if 1 <= gr_choice <= 4:  # FIXED
                         break
+                    else:
+                        print("\033[31mPlease enter a number from 1 to 4.\033[0m")
             except ValueError:
                 print("invalid choice entered")
                 input("\n\033[35mPress Enter to continue...\033[0m")
@@ -347,8 +357,10 @@ while True:
             try:
                 while True:
                     re_choice = int(input("\n\033[33mEnter 1-4:\033[0m "))
-                    if re_choice in (1, 4):
+                    if 1 <= re_choice <= 4:  # FIXED
                         break
+                    else:
+                        print("\033[31mPlease enter a number from 1 to 4.\033[0m")
             except ValueError:
                 print("invalid choice entered")
                 input("\n\033[35mPress Enter to continue...\033[0m")

@@ -45,7 +45,7 @@ def grade_menu():
 def reports_menu():
 
   print("""
-. Student Reports
+1. Student Reports
 2. Department Reports
 3. Course Reports
 4. Go Back""")
